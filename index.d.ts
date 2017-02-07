@@ -949,6 +949,42 @@ declare module Tone {
     dispose(): Tone.Param;
   }
 
+  let Part: {
+      new(callback: (time: Type.Time, note: any) => any, events: any[]): Tone.Part;
+  }
+
+  interface Part extends Tone.Event {
+    mute: boolean;
+    probability: Type.NormalRange;
+    humanize: boolean;
+    loop: boolean | number;
+    loopEnd: Type.Notation;
+    loopStart: Type.Notation;
+    playbackRate: number;
+    length: number;
+    dispose(): Tone.Part;
+    start(time?: Type.Time, offset?: Type.Time): Tone.Part;
+    stop(time?: Type.Time): Tone.Part;
+    at(time: Type.Time, value?: any): Tone.Event;
+    add(time: Type.Time, value: any): Tone.Part;
+    remove(time: Type.Time, value?: any): Tone.Part;
+    removeAll(): Tone.Part;
+    cancel(after?: Type.Time): Tone.Part;
+  }
+
+  let Pattern: {
+    new(callback: (time: Type.Time, note: any) => any, values: any[], pattern: string): Tone.Pattern;
+    defaults: Object;
+  }
+
+  interface Pattern extends Tone.Loop {
+    index: number;
+    values: any[];
+    value: any;
+    pattern: string;
+    dispose(): Tone.Pattern;
+  }
+
   let Phaser: {
     new(rate?: any, depth?: number, baseFrequency?: number): Tone.Phaser; //TODO: change 'any' to 'number | Object'
   };
@@ -1116,6 +1152,19 @@ declare module Tone {
     gate: Tone.Signal;
     dispose(): Tone.Select;
     select(which: number, time?: Type.Time): Tone.Select;
+  }
+
+  let Sequence: {
+    new(callback: (time: Type.Time, note: any) => any, events: any[], subdivision: Type.Notation): Tone.Sequence;
+    defaults: Object;
+  };
+
+  interface Sequence extends Tone.Part {
+    readonly subdivision: Type.Notation;
+    at(index: number, value?: any): Tone.Part;
+    add(index: number, value: any): Tone.Part;
+    remove(index: number): Tone.Part;
+    dispose(): Tone.Part;
   }
 
   module Signal {

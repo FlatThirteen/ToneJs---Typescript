@@ -1,6 +1,6 @@
 {
   "name": "@types/tone",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "TypeScript definitions for Tone.js",
   "license": "MIT",
   "author": "Stanley Chen <https://github.com/Ecafracs/>, Luke Phillips <https://github.com/lukephills>, Pouya Kary <https://github.com/pmkary>",
