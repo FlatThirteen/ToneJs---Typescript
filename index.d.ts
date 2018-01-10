@@ -474,6 +474,24 @@ declare module Tone {
     dispose(): TimeBase;
   }
 
+  let Time: {
+    new(val: string | number, units?: string): Tone.Time;
+  };
+
+  interface Time extends TimeBase {
+    addNow(): Time;
+    copy(time: Time): Time;
+    quantize(val: number | Time, percent?: Type.NormalRange): Time;
+    toBarsBeatsSixteenths(): Type.BarsBeatsSixteenths;
+    toFrequency(): Type.Frequency;
+    toMilliseconds(): Type.Milliseconds;
+    toNotation(): Type.Notation;
+    toSamples(): number;
+    toSeconds(): Type.Seconds;
+    toTicks(): Type.Ticks;
+    valueOf(): Type.Seconds;
+  }
+
   let Frequency: {
     new(val: Type.Time, units?: string): Tone.Frequency;
   };
