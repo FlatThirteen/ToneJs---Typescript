@@ -670,6 +670,7 @@ declare module Tone {
     octaves: number;
     dispose(): Tone.MetalSynth;
     triggerAttack(time?: Type.Time, velocity?: number): Tone.MetalSynth;
+    triggerRelease(time?: Type.Time): Tone.MetalSynth;
     triggerAttackRelease(duration: Type.Time, time?: Type.Time, velocity?: number): Tone.MetalSynth;
   }
 
