@@ -18,6 +18,7 @@ declare namespace Type {
   type Degrees = number; //[0, 360]
   type MIDI = number; // MIDI note number
   type BarsBeatsSixteenths = string; // Time expressed as Bars:Beats:Sixteenths
+  type Samples = string; // Time expressed as Bars:Beats:Sixteenths
   type Note = string; // Scientific Pitch Notation, e.g. A4
   type Milliseconds = number;
   type Seconds = number;
@@ -83,7 +84,7 @@ interface Tone {
 
   // Type conversion
   toSeconds(time?: Type.Time, now?: number): Type.Seconds;
-  toFrequency(note: Tone.Frequency, now?: number): Type.Frequency;
+  toFrequency(note: Type.Frequency, now?: number): Type.Frequency;
   toTicks(time?: Type.Time): Type.Ticks;
 
   // Master
@@ -472,24 +473,6 @@ declare module Tone {
     div(val: Type.Time, units?: string): TimeBase;
     eval(): number;
     dispose(): TimeBase;
-  }
-
-  let Time: {
-    new(val: string | number, units?: string): Tone.Time;
-  };
-
-  interface Time extends TimeBase {
-    addNow(): Time;
-    copy(time: Time): Time;
-    quantize(val: number | Time, percent?: Type.NormalRange): Time;
-    toBarsBeatsSixteenths(): Type.BarsBeatsSixteenths;
-    toFrequency(): Type.Frequency;
-    toMilliseconds(): Type.Milliseconds;
-    toNotation(): Type.Notation;
-    toSamples(): number;
-    toSeconds(): Type.Seconds;
-    toTicks(): Type.Ticks;
-    valueOf(): Type.Seconds;
   }
 
   let Frequency: {
@@ -968,8 +951,8 @@ declare module Tone {
   }
 
   let Part: {
-      new(callback: (time: Type.Time, note: any) => any, events: any[]): Tone.Part;
-  }
+    new(callback: (time: Type.Time, note: any) => any, events: any[]): Tone.Part;
+  };
 
   interface Part extends Tone.Event {
     mute: boolean;
@@ -993,7 +976,7 @@ declare module Tone {
   let Pattern: {
     new(callback: (time: Type.Time, note: any) => any, values: any[], pattern: string): Tone.Pattern;
     defaults: Object;
-  }
+  };
 
   interface Pattern extends Tone.Loop {
     index: number;
@@ -1055,7 +1038,7 @@ declare module Tone {
   }
 
   let PolySynth: {
-    new(voicesAmount?: number | Object, voice?: () => any): Tone.PolySynth;
+    new(voicesAmount?: number | Object, voice?: any, options?: any): Tone.PolySynth;
   };
 
   interface PolySynth extends Tone.Instrument {
@@ -1296,6 +1279,32 @@ declare module Tone {
     close(time: Type.Time): Tone.Switch;
     dispose(): Tone.Switch;
     open(time: Type.Time): Tone.Switch
+  }
+
+  let Synth: {
+    new(options: any): Tone.Synth;
+  };
+
+  interface Synth extends Tone.Monophonic {
+    dispose(): Tone.Synth;
+  }
+
+  let Time: {
+    new(value: string | number, units?: string): Tone.Time;
+  };
+
+  interface Time extends Tone.TimeBase {
+    quantize(subdiv: number | Tone.Time, percent: Type.NormalRange): Tone.Time;
+    addNow(): Tone.Time;
+    copy(): Tone.Time;
+    toNotation(): Type.Notation;
+    toBarsBeatsSixteenths(): Type.BarsBeatsSixteenths;
+    toTicks(): Type.Ticks;
+    toSamples(): Type.Samples;
+    toFrequency(): Type.Frequency;
+    toSeconds(): Type.Seconds;
+    toMilliseconds(): Type.Milliseconds;
+    valueOf(): Type.Seconds;
   }
 
   let TimelineSignal: {
