@@ -271,6 +271,15 @@ declare module Tone {
     dispose(): Tone.Distortion;
   }
 
+  let Draw: {
+    schedule(callback: () => any, time: Type.Time): Tone.Draw;
+    cancel(after?: Type.Time): Tone.Draw;
+  };
+
+  interface Draw extends Tone {
+    // Should interact directly with Transport singleton
+  }
+
   let DuoSynth: {
     new(options?: any): Tone.DuoSynth;
   };
