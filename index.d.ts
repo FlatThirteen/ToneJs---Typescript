@@ -93,6 +93,63 @@ interface Tone {
 
 declare module Tone {
 
+  let input: GainNode | GainNode[];
+  let output: GainNode | GainNode[];
+
+  let set: (params: Object | string, value?: number, rampTime?: Type.Time) => Tone;
+  let get: (params: string[] | string) => Object;
+  let toString: () => string;
+
+  let context: AudioContext;
+  let bufferSize: number;
+  let blockTime: number;
+  let sampleTime: number;
+
+  let dispose: () => Tone;
+  let noGC: () => Tone;
+  let connect: (unit: Tone | AudioParam | AudioNode, outputNum?: number, inputNum?: number) => Tone;
+  let disconnect: (outputNum?:number | AudioNode) => Tone;
+  let connectSeries: (...args: Array<Tone | AudioParam | AudioNode>) => Tone;
+  let chain: (...nodes: Array<Tone | AudioParam | AudioNode>) => Tone;
+  let fan: (...nodes: Array<Tone | AudioParam | AudioNode>) => Tone;
+
+  // UTILITIES / HELPERS / MATHS
+  let defaultArg: (given: any, fallback: any) => any;
+  let optionsObject: (values: any[], keys: string[], defaults?:Object) => Object;
+
+  // TYPE CHECKING
+  let isUndef: (arg: any) => boolean;
+  let isFunction: (arg: any) => boolean;
+  let isNumber: (arg: any) => boolean;
+  let isObject: (arg: any) => boolean;
+  let isBoolean: (arg: any) => boolean;
+  let isArray: (arg: any) => boolean;
+  let isString: (arg: any) => boolean;
+
+  // GAIN CONVERSIONS
+  let equalPowerScale: (percent: Type.NormalRange) => Type.NormalRange;
+  let dbToGain: (db: Type.Decibels) => number;
+  let gainToDb: (gain: Type.NormalRange) => Type.Decibels;
+  let intervalToFrequencyRatio: (interval: Type.Interval) => number;
+
+  // TIMING
+  let now: () => number;
+
+  // INHERITANCE
+  let extend: (child: ()=>any, parent?: ()=>any) => void;
+
+  // BUSES
+  let send: (channelName: string, amount?: number) => Tone;
+  let receive: (channelName: string, input?: AudioNode) => Tone;
+
+  // Type conversion
+  let toSeconds: (time?: Type.Time, now?: number) => Type.Seconds;
+  let toFrequency: (note: Type.Frequency, now?: number) => Type.Frequency;
+  let toTicks: (time?: Type.Time) => Type.Ticks;
+
+  // Master
+  let toMaster: () => Tone;
+
   import AudioRange = Type.AudioRange;
   let Abs: {
     new(): Tone.Abs;
